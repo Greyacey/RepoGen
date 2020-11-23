@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>ipNX</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/vendor/simple-line-icons/css/simple-line-icons.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+  <!-- Plugin CSS -->
+  <link rel="stylesheet" href="/static/device-mockups/device-mockups.min.css">
+
+  <!-- Custom styles for this template -->
+  <link href="/static/css/styl.css" rel="stylesheet">
+  <link href="/static/logo.png" rel="shortcut icon" type="image/x-icon" />
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#"><img src="/static/logo.png" alt="" style="width:140px"></a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#" data-toggle="modal" data-target="#login" >Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#" data-toggle="modal" data-target="#contact">Contact Us</a>
+          </li>
+          <li class="nav-item">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div class="modal" tabindex="-1" role="dialog" id="login">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Login</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="/login">
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Username:</label>
+                        <input type="text" class="form-control" name="username" required>
+                      </div>
+                  </div>
+                </div>
+               <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Password:</label>
+                        <input type="password" class="form-control" name="password" required>
+                      </div>
+                  </div>
+              </div>
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </div>
+                </div>
+                <small class="text-muted">
+                    Do Not Have An Account?<a class="ml-2" href=""  data-toggle="modal" data-target="#contact">Request</a>
+                </small> 
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal" tabindex="-1" role="dialog" id="register">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Register</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="/register">
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Username:</label>
+                        <input type="text" class="form-control" name="username" required>
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Email:</label>
+                        <input type="email" class="form-control" name="email" required>
+                      </div>
+                  </div>
+                </div>
+               <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Password:</label>
+                        <input type="password" class="form-control" name="password" required>
+                      </div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Confirm Password:</label>
+                        <input type="password" class="form-control" name="passwordd" required>
+                      </div>
+                  </div>
+              </div>
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div>
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </div>
+                    </div>
+                </div> 
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal" tabindex="-1" role="dialog" id="contact">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Contact Us</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="/contact">
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Name:</label>
+                        <input type="text" class="form-control" name="username" required>
+                      </div>
+                  </div>
+                </div>
+               <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                       <label class="text-dark">Comment:</label>
+                       <textarea rows = "7" cols = "49" name = "description" required>
+                        </textarea>
+                      </div>
+                  </div>
+              </div>
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  <br/>
+  <br/>
+  <br/>
+    <div class="container">
+        <div class="con">
+             {%with messages = get_flashed_messages()%}
+                   {%if messages%}
+                       {% for message in messages %}
+                           <div class="alert alert-success alert-dismissable" role="alert">
+                               <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                                {{message}}
+                            </div>
+                        {%endfor%}
+                    {%endif%}
+                {%endwith%}
+             </div>
+      <div class="bg-text">
+       <br/>
+                 <br/><br/>
+                  <h1>ipNX Nigeria</h1>
+                  <p>Site List Application</p>
+                  <br/><br/>
+                </div>
+     </div>
+    
+  <!-- Bootstrap core JavaScript -->
+  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="/static/js/new-age.min.js"></script>
+
+</body>
+
+</html>
