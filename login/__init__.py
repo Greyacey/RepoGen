@@ -152,3 +152,8 @@ def update(repo_id):
 def closed_Report():
     qry = closed.query.all()
     return render_template('home.html', rep=qry)
+
+@app.route('/custom_Report', methods=['POST','GET'])
+def custom_Report():
+    qry = closed.query.all()
+    return render_template('home.html', rep=qry)

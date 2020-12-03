@@ -25,7 +25,7 @@
 
   <!-- Custom styles for this template -->
 
-  <link href="/static/css/st.css" rel="stylesheet">
+  <link href="/static/css/strre.css" rel="stylesheet">
   <link href="/static/logo.png" rel="shortcut icon" type="image/x-icon" />
 </head>
 
@@ -46,10 +46,22 @@
             <a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#add_site">Add</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{{ url_for('index') }}">Open Reports</a>
+              <div class="dropdown">
+                <button class="dropbtn">Reports</button>
+                  <div class="dropdown-content">
+                  <a href="{{ url_for('index') }}">Open Report</a> 
+                  <a href="{{ url_for('closed_Report') }}">Closed Report</a>
+                </div>
+              </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{{ url_for('closed_Report') }}">Reports</a>
+            <div class="dropdown">
+              <button class="dropbtn">Download</button>
+                <div class="dropdown-content">
+                  <a href="{{ url_for('closed_Report') }}">Daily Report</a> 
+                  <a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#download">Custom Report</a>
+                </div>
+              </div>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="{{ url_for('register') }}">Register</a>
@@ -76,21 +88,43 @@
                 <div class="row">
                   <div class="col">
                       <div class="form-group">
-                        <label class="text-dark">Name:</label>
+                        <label class="text-dark">Node/Service Name:</label>
+                        <input type="text" class="form-control" name="name" required>
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Outage Date:</label>
                         <input type="text" class="form-control" name="name" required>
                       </div>
                   </div>
                   <div class="col">
                     <div class="form-group">
-                      <label class="text-dark">Device:</label>
+                      <label class="text-dark">Outage Time:</label>
                       <input type="text" class="form-control" name="device" required>
                     </div>
+                  </div>
                 </div>
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Affected POPs/Services:</label>
+                        <input type="text" class="form-control" name="name" required>
+                      </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label class="text-dark">Name of Reporter:</label>
+                      <input type="text" class="form-control" name="device" required>
+                    </div>
+                  </div>
                 </div>
               <div class="row">
                   <div class="col">
                       <div class="form-group">
-                        <label class="text-dark">Details:</label>
+                        <label class="text-dark">Fault Owner:</label>
                         <input type="text" class="form-control" name="details" required>
                       </div>
                   </div>
@@ -98,11 +132,74 @@
               <div class="row">
                 <div class="col">
                     <div class="form-group">
-                      <label class="text-dark">Comment:</label>
-                      <input type="text" class="form-control" name="comment" required>
+                      <label class="text-dark">Cause of Outage:</label>
+                      <textarea rows="5" class="form-control" name="details" required></textarea>
                     </div>
                 </div>
             </div>
+              <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                      <label class="text-dark">Outage Details:</label>
+                      <textarea rows="5" class="form-control" name="details" required></textarea>
+                    </div>
+                </div>
+            </div>
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+
+    <div class="modal" tabindex="-1" role="dialog" id="download">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Download Report</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="/custom_report">
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Device:</label>
+                        <select name="device" id="devices">
+                          <option value="some">All Devices</option>
+                          <option value="som">Routers</option>
+                          <option value="somee">OLT</option>
+                          <option value="somem">Whiteboxes</option>
+                        </select>
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Start Date:</label>
+                        <input type="date" class="form-control" name="startdate" required>
+                      </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label class="text-dark"> End Date:</label>
+                      <input type="date" class="form-control" name="enddate" required>
+                    </div>
+                  </div>
+                </div>
                 <div class="row justify-content-center">
                     <div class="col">
                         <div>
@@ -142,12 +239,15 @@
       <table class="table">
         <tr class=" text-light" style="background-color: rgb(100, 100, 100)">
           <th>S/N</th>
-          <th>Name</th>
-          <th>Date</th>
-          <th>Device</th>
-          <th>Report</th>
-          <th>Comment</th>
-          <th>Status</th>
+          <th>Node/Service Name</th>
+          <th>Outage Date</th>
+          <th>Outage Time</th>
+          <th>Fault Owner</th>
+          <th>Cause of Outage</th>
+          <th>Outage Detail</th>
+          <th>Affected POPs/Services</th>
+          <th>Name of Reporter</th>
+          <th>Action</th>
         </tr>
           <tbody>
             {% for row in repo %}
@@ -158,8 +258,12 @@
                       <td>{{row.device}}</td>
                       <td>{{row.details}}</td>
                       <td>{{row.comment}}</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
                       <td>
-                          <a href="{{ url_for('update', repo_id=row.id) }}"  onclick="return confirm('Are You Sure you want to close report?')" style="color: blue">Open</a>
+                          <a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#close_report" onclick="return confirm('Are You Sure you want to close report?')" style="color: blue">Close</a>
+                          <a href=""  onclick="return confirm('Are You Sure you want to delete report?')" style="color: red">Delete</a>
                       </td>
                   </tr>
                   <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
@@ -305,6 +409,55 @@
                 
         </tbody>
     </table>
+    <div class="modal" tabindex="-1" role="dialog" id="close_report">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Close Report</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="/custom_report">
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Closed by:</label>
+                        <input type="text" class="form-control" name="namme" required>
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                        <label class="text-dark">Resolution Date:</label>
+                        <input type="date" class="form-control" name="startdate" required>
+                      </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label class="text-dark"> Resolution time:</label>
+                      <input type="text" class="form-control" name="endtime" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
  </div>
                 
 
