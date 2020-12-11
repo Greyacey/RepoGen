@@ -10,7 +10,7 @@ import os
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from datetime import datetime
+from datetime import datetime, date
 
 
 app = Flask(__name__)
@@ -41,10 +41,14 @@ class user_login(db.Model, UserMixin):
 class report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
-    date = db.Column(db.DateTime(6), nullable=False)
-    device = db.Column(db.String(250), nullable=False)
+    outagedate = db.Column(db.Date(), nullable=False)
+    outagetime = db.Column(db.Time(), nullable=False)
+    fowner = db.Column(db.String(250), nullable=False)
+    affectname = db.Column(db.String(250), nullable=False)
+    cause = db.Column(db.String(250), nullable=False)
+    repname = db.Column(db.String(250), nullable=False)
     details = db.Column(db.String(250), nullable=False)
-    comment = db.Column(db.String(250), nullable=False)
+     
     
     def __repr__(self):
         return "id: {0} | name: {1} | date: {2} | device: {3}  | details: {4} | comment: {5} |".format(self.id, self.name, self.date, self.device, self.details, self.comment)
@@ -52,11 +56,17 @@ class report(db.Model):
 class closed(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
-    date = db.Column(db.DateTime(6), nullable=False)
-    device = db.Column(db.String(250), nullable=False)
+    outagedate = db.Column(db.Date(), nullable=False)
+    outagetime = db.Column(db.Time(), nullable=False)
+    resolutiondate = db.Column(db.Date(), nullable=False)
+    resolutiontime = db.Column(db.Time(), nullable=False)
+    fowner = db.Column(db.String(250), nullable=False)
+    affectname = db.Column(db.String(250), nullable=False)
+    cause = db.Column(db.String(250), nullable=False)
+    repname = db.Column(db.String(250), nullable=False)
+    closename = db.Column(db.String(250), nullable=False)
     details = db.Column(db.String(250), nullable=False)
-    comment = db.Column(db.String(250), nullable=False)
-    
+
     def __repr__(self):
         return "id: {0} | name: {1} | date: {2} | device: {3}  | details: {4} | comment: {5} |".format(self.id, self.name, self.date, self.device, self.details, self.comment)
 
@@ -122,25 +132,33 @@ def contact():
     flash("Comment Submitted")
     return redirect(url_for('login'))
 
+
 @app.route('/update/add', methods=['POST', 'GET'])
 def add_site():
     if request.method == 'POST':
         data = request.form
         name = data['name']
-        device = data['device']
+        outagedate = data['outagedate']
+        outagetime = data['outagetime']
+        fowner = data['fowner']
+        affectname = data['affectname']
+        cause = data['cause']
+        repname = "Grace"
         details = data['details']
-        comment = data['comment']
-        date = datetime.now()
-        repo = report(name=name, date=date, device=device, details=details, comment=comment)
+        repo = report(name=name, outagedate=outagedate, outagetime=outagetime, fowner=fowner, affectname=affectname, cause=cause, repname=repname, details=details)
         db.session.add(repo)
         db.session.commit()
-        flash("Site Added Successfully")
+        flash("Report Added Successfully")
         return redirect(url_for('index'))
         
 @app.route("/update/<int:repo_id>", methods=['POST','GET'])
 def update(repo_id):
     repo =report.query.get(repo_id)
-    repor = closed(name=repo.name, date=repo.date, device=repo.device, details=repo.details, comment=repo.comment)
+    now = datetime.now()
+    restime = now.strftime("%H:%M:%S")
+    resdate = date.today()
+    closename = "Kola"
+    repor = closed(name=repo.name, outagedate=repo.outagedate, outagetime=repo.outagetime, resolutiondate=resdate, resolutiontime=restime, fowner=repo.fowner, affectname=repo.affectname, cause=repo.cause, repname=repo.repname, closename=closename, details=repo.details)
     db.session.add(repor)
     db.session.commit()
     db.session.delete(repo)
@@ -148,9 +166,19 @@ def update(repo_id):
     flash("Report closed")
     return redirect(url_for('index'))
 
+
 @app.route('/closed_Report', methods=['POST','GET'])
 def closed_Report():
     qry = closed.query.all()
+    return render_template('home.html', rep=qry)
+
+@app.route('/daily_Report', methods=['POST','GET'])
+def daily_Report():
+    if request.method == 'POST':
+        data = request.form
+        sdate = data['startdate']
+        edate = data['enddate']
+    qry = (report.query.filter(report.outagedate.between(sdate, edate))
     return render_template('home.html', rep=qry)
 
 @app.route('/custom_Report', methods=['POST','GET'])

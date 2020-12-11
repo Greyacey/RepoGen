@@ -58,8 +58,8 @@
             <div class="dropdown">
               <button class="dropbtn">Download</button>
                 <div class="dropdown-content">
-                  <a href="{{ url_for('closed_Report') }}">Daily Report</a> 
-                  <a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#download">Custom Report</a>
+                  <a href="">Daily Report</a> 
+                  <a href="" class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#download">Custom Report</a>
                 </div>
               </div>
           </li>
@@ -73,7 +73,7 @@
       </div>
     </div>
   </nav>
-  <!--FOR ADDING NEW SITE-->
+  <!--FOR ADDING NEW  REPORT-->
     <div class="modal" tabindex="-1" role="dialog" id="add_site">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -87,64 +87,72 @@
             <form method="post" action="/update/add">
                 <div class="row">
                   <div class="col">
-                      <div class="form-group">
+                    <div class="form-group">
                         <label class="text-dark">Node/Service Name:</label>
-                        <input type="text" class="form-control" name="name" required>
-                      </div>
+                        <select class="form-control" name="name">
+                          <option name="layer2" selected>MTN</option>
+                          <option name="layer3">GLO</option>
+                          <option name="layer2">IHS</option>
+                        </select>
+                    </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
                       <div class="form-group">
                         <label class="text-dark">Outage Date:</label>
-                        <input type="text" class="form-control" name="name" required>
+                        <input type="date" class="form-control" name="outagedate" required>
                       </div>
                   </div>
                   <div class="col">
                     <div class="form-group">
                       <label class="text-dark">Outage Time:</label>
-                      <input type="text" class="form-control" name="device" required>
+                      <input type="time" class="form-control" name="outagetime" required>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                      <div class="form-group">
+                    <div class="form-group">
                         <label class="text-dark">Affected POPs/Services:</label>
-                        <input type="text" class="form-control" name="name" required>
-                      </div>
+                        <select class="form-control" name="affectname">
+                          <option name="layer2" selected>MTN</option>
+                          <option name="layer3">GLO</option>
+                          <option name="layer2">IHS</option>
+                        </select>
+                    </div>
                   </div>
                   <div class="col">
                     <div class="form-group">
-                      <label class="text-dark">Name of Reporter:</label>
-                      <input type="text" class="form-control" name="device" required>
-                    </div>
-                  </div>
-                </div>
-              <div class="row">
-                  <div class="col">
-                      <div class="form-group">
                         <label class="text-dark">Fault Owner:</label>
-                        <input type="text" class="form-control" name="details" required>
-                      </div>
-                  </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                      <label class="text-dark">Cause of Outage:</label>
-                      <textarea rows="5" class="form-control" name="details" required></textarea>
+                        <select class="form-control" name="fowner">
+                          <option name="layer2" selected>MTN</option>
+                          <option name="layer3">GLO</option>
+                          <option name="layer2">IHS</option>
+                        </select>
                     </div>
+                  </div>
                 </div>
-            </div>
-              <div class="row">
-                <div class="col">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                        <label class="text-dark">Cause of Outage:</label>
+                        <select class="form-control" name="cause">
+                          <option name="layer2" selected>MTN</option>
+                          <option name="layer3">GLO</option>
+                          <option name="layer2">IHS</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
                     <div class="form-group">
                       <label class="text-dark">Outage Details:</label>
                       <textarea rows="5" class="form-control" name="details" required></textarea>
                     </div>
+                  </div>
                 </div>
-            </div>
                 <div class="row justify-content-center">
                     <div class="col">
                         <div>
@@ -161,7 +169,7 @@
       </div>
     </div>
     <br/>
-
+    <!--FOR DOWNLOADING NEW  REPORT-->
     <div class="modal" tabindex="-1" role="dialog" id="download">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -172,7 +180,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form method="post" action="/custom_report">
+            <form method="post" action="/daily_report">
                 <div class="row">
                   <div class="col">
                       <div class="form-group">
@@ -254,122 +262,47 @@
                   <tr style="background-color: white">
                       <td>{{row.id}}</td>
                       <td>{{row.name}}</td>
-                      <td>{{row.date}}</td>
-                      <td>{{row.device}}</td>
+                      <td>{{row.outagedate}}</td>
+                      <td>{{row.outagetime}}</td>
+                      <td>{{row.fowner}}</td>
+                      <td>{{row.cause}}</td>
                       <td>{{row.details}}</td>
-                      <td>{{row.comment}}</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                      <td>{{row.affectname}}</td>
+                      <td>{{row.repname}}</td>
                       <td>
-                          <a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#close_report" onclick="return confirm('Are You Sure you want to close report?')" style="color: blue">Close</a>
+                          <a href="{{ url_for('update', repo_id=row.id) }}" class="nav-link js-scroll-trigger" onclick="return confirm('Are You Sure you want to close report?')" style="color: blue">Close</a>
                           <a href=""  onclick="return confirm('Are You Sure you want to delete report?')" style="color: red">Delete</a>
                       </td>
                   </tr>
-                  <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+
+                  <!--FOR CLOSING NEW  Report-->
+                  <div id="close_report" class="modal fade" role="dialog">
                   <div class="modal-dialog">
                       <div class="modal-content">
                           <div class="modal-header">
-                            <h4 class="modal-title">Update Information</h4>
+                            <h4 class="modal-title">Close Report</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                           </div>
                           <div class="modal-body">
                               <form method="post" action="{{ url_for('update', repo_id=row.id) }}">
-                              <div class="row">
-                                <div class="col">
+                                <div class="row">
+                                  <div class="col">
+                                      <div class="form-group">
+                                        <label class="text-dark">Resolution Date:</label>
+                                        <input type="date" class="form-control" name="resolutiondate" required>
+                                      </div>
+                                  </div>
+                                  <div class="col">
                                     <div class="form-group">
-                                      <label class="text-dark">Site Name:</label>
-                                      <input type="hidden"  name="id" value="{{row.id}}">
-                                      <input type="text" class="form-control" name="sitename" value="{{row.sitename}}" required>
+                                      <label class="text-dark"> Resolution time:</label>
+                                      <input type="time" class="form-control" name="resolutiontime" required>
                                     </div>
+                                  </div>
                                 </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                      <label class="text-dark">Site Code:</label>
-                                      <input type="text" class="form-control" name="sitecode" value="{{row.sitecode}}" required>
-                                    </div>
-                                </div>
-                              </div>
-                            <div class="row">
-                              <div class="col">
-                                  <div class="form-group">
-                                      <label class="text-dark">Service Provider:</label>
-                                      <select class="form-control" name="serviceprovider">
-                                        <option name="layer2" selected>MTN</option>
-                                        <option name="layer3">GLO</option>
-                                        <option name="layer2">IHS</option>
-                                      </select>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                      <label class="text-dark">Region:</label>
-                                      <input type="text" class="form-control" name="region" value="{{row.region}}"  required>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                      <label class="text-dark">Address:</label>
-                                      <input type="text" class="form-control" name="address" value="{{row.address}}"  required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                      <label class="text-dark">Longitude:</label>
-                                      <input type="text" class="form-control" name="longitude" value="{{row.longitude}}" required>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                      <label class="text-dark">Latitude:</label>
-                                      <input type="text" class="form-control" name="latitude" value="{{row.latitude}}" required>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                      <label class="text-dark">FITH:</label>
-                                      <select class="form-control" name="fith">
-                                        <option name="layer2" selected>Yes</option>
-                                        <option name="layer3">No</option>
-                                      </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                      <label class="text-dark">Mast:</label>
-                                      <select class="form-control" name="mast">
-                                        <option name="layer2" selected>Yes</option>
-                                        <option name="layer3">No</option>
-                                      </select>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                      <label class="text-dark">Power:</label>
-                                      <select class="form-control" name="power">
-                                        <option name="layer2" selected>ipNX</option>
-                                        <option name="layer3">Others</option>
-                                      </select>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                      <label class="text-dark">Backup Power:</label>
-                                      <select class="form-control" name="backpower">
-                                        <option name="layer2" selected>ipNX</option>
-                                        <option name="layer3">Others</option>
-                                      </select>
-                                    </div>
-                                </div>
-                            </div>
                               <div class="row justify-content-center">
                                   <div class="col">
                                       <div>
-                                          <button type="submit" class="btn btn-primary">Update</button>
+                                          <button type="submit" class="btn btn-primary">close</button>
                                       </div>
                                   </div>
                               </div>
@@ -384,12 +317,18 @@
                   {% endfor %}
                   {% for row in rep %}
                   <tr style="background-color: white">
-                      <td>{{row.id}}</td>
-                      <td>{{row.name}}</td>
-                      <td>{{row.date}}</td>
-                      <td>{{row.device}}</td>
-                      <td>{{row.details}}</td>
-                      <td>{{row.comment}}</td>
+                    <td>{{row.id}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.outagedate}}</td>
+                    <td>{{row.outagetime}}</td>
+                    <td>{{row.resolutiondate}}</td>
+                    <td>{{row.resolutiontime}}</td>
+                    <td>{{row.fowner}}</td>
+                    <td>{{row.cause}}</td>
+                    <td>{{row.details}}</td>
+                    <td>{{row.affectname}}</td>
+                    <td>{{row.repname}}</td>
+                    <td>{{row.closename}}</td>
                       <td>
                         <a href="#"  style="color: red">Closed</a>
                     </td>
@@ -408,62 +347,9 @@
                 {%endif%}
                 
         </tbody>
-    </table>
-    <div class="modal" tabindex="-1" role="dialog" id="close_report">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Close Report</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form method="post" action="/custom_report">
-                <div class="row">
-                  <div class="col">
-                      <div class="form-group">
-                        <label class="text-dark">Closed by:</label>
-                        <input type="text" class="form-control" name="namme" required>
-                      </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                      <div class="form-group">
-                        <label class="text-dark">Resolution Date:</label>
-                        <input type="date" class="form-control" name="startdate" required>
-                      </div>
-                  </div>
-                  <div class="col">
-                    <div class="form-group">
-                      <label class="text-dark"> Resolution time:</label>
-                      <input type="text" class="form-control" name="endtime" required>
-                    </div>
-                  </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col">
-                        <div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+      </table>
     <br/>
- </div>
-                
-
-    </div>
   </div>
-    </div>
 
   <!-- Bootstrap core JavaScript -->
   <script src="/static/vendor/jquery/jquery.min.js"></script>
